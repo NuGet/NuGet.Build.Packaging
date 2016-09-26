@@ -26,6 +26,11 @@
     <Content Include="MSBuild\Microsoft.Common.Targets\ImportAfter\Microsoft.NuGet.Packaging.ImportAfter.targets">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="NuGet.Build.Packaging.CrossTargetting.targets">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>buildCrossTargetting\%(Filename)%(Extension)</PackagePath>
+    </Content>
     <None Include="NuGet.Build.Packaging.Tasks.targets">
       <SubType>Designer</SubType>
     </None>

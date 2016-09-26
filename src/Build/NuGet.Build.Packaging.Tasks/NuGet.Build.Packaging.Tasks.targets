@@ -31,7 +31,10 @@
 
 	<Target Name="AddBuiltOutput" DependsOnTargets="ResolveReferences;AllProjectOutputGroups;AssignTargetPaths">
 		<ItemGroup>
-			<PackageFile Include="@(ContentWithTargetPath)">
+			<ContentWithoutPackagePath Include="@(ContentWithTargetPath)" Condition="'%(ContentWithTargetPath.PackagePath)' == ''"  />
+			<ContentWithPackagePath Include="@(ContentWithTargetPath)" Condition="'%(ContentWithTargetPath.PackagePath)' != ''" />
+			<PackageFile Include="@(ContentWithPackagePath)" />
+			<PackageFile Include="@(ContentWithoutPackagePath)">
 				<PackagePath>build\%(TargetPath)</PackagePath>
 			</PackageFile>
 			<PackageFile Include="@(BuiltProjectOutputGroupOutput -> '%(FinalOutputPath)')">
@@ -43,6 +46,10 @@
 		</ItemGroup>
 	</Target>
 
+	<Target Name="ReportBuiltPackage" AfterTargets="Pack">
+		<Message Importance="high" Text="Built package @(PackageTargetPath)." />
+	</Target>
+
 	<Target Name="PackageItemKind" BeforeTargets="BuildOnlySettings" DependsOnTargets="GeneratePackageItemKind">
 		<ItemGroup>
 			<Compile Include="$(PackageItemKindFile)" />
@@ -52,8 +59,8 @@
 	<Target Name="GeneratePackageItemKind" Inputs="$(MSBuildThisFileFullPath);NuGet.Build.Packaging.props" Outputs="$(PackageItemKindFile)">
 		<MakeDir Directories="$(IntermediateOutputPath)" Condition=" !Exists('$(IntermediateOutputPath)') " />
 		<XmlPeek Namespaces="&lt;Namespace Prefix='msb' Uri='http://schemas.microsoft.com/developer/msbuild/2003'/&gt;"
-					 Query="/msb:Project/msb:ItemGroup/msb:PackageItemKind/@Include"
-					 XmlInputPath="$(MSBuildThisProjectDirectory)NuGet.Build.Packaging.props">
+						 Query="/msb:Project/msb:ItemGroup/msb:PackageItemKind/@Include"
+						 XmlInputPath="$(MSBuildThisProjectDirectory)NuGet.Build.Packaging.props">
 			<Output TaskParameter="Result" ItemName="_PackageItemKind" />
 		</XmlPeek>
 
