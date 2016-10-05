@@ -1,0 +1,36 @@
+<!--
+***********************************************************************************************
+Microsoft.NuGet.Build.Packaging.CrossTargetting.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved. 
+***********************************************************************************************
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<!--
+	============================================================
+                             GetPackageContents
+   Cross-targeting version of GetPackageContents. 
+   NOTE: depends on Microsoft.Common.CrossTargeting.targets
+   
+   [IN]
+   $(TargetFrameworks) - Semicolon delimited list of target frameworks.
+   
+   [OUT]
+   @(InnerOutput) - The combined output items of the inner targets across
+                    all builds.
+  ============================================================
+  -->
+	<Target Name="GetPackageContents" DependsOnTargets="_SetBuildInnerTarget;DispatchToInnerBuilds" Returns="@(InnerOutput)" />
+
+	<Target Name="_SetBuildInnerTarget">
+		<PropertyGroup>
+			<InnerTargets>GetPackageContents</InnerTargets>
+		</PropertyGroup>
+	</Target>
+
+</Project>
