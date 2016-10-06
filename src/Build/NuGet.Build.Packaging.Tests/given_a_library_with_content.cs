@@ -58,5 +58,42 @@ namespace NuGet.Build.Packaging
 				PackagePath = @"contentFiles\any\monoandroid51\Resources\drawable-hdpi\Icon.png",
 			}));
 		}
+
+		[Fact]
+		public void when_none_item_has_no_include_in_package_then_it_is_not_included()
+		{
+			var result = Builder.BuildScenario(nameof(given_a_library_with_content), new
+			{
+				PackageId = "ContentPackage",
+			});
+
+			Assert.Equal(TargetResultCode.Success, result.ResultCode);
+
+			Assert.DoesNotContain(result.Items, item => item.Matches(new
+			{
+				ItemSpec = "none.txt",
+			}));
+		}
+
+		[Fact]
+		public void when_none_item_has_include_in_package_then_it_is_included_in_specified_target_path()
+		{
+			var result = Builder.BuildScenario(nameof(given_a_library_with_content), new
+			{
+				PackageId = "ContentPackage",
+			});
+
+			Assert.Equal(TargetResultCode.Success, result.ResultCode);
+
+			Assert.Contains(result.Items, item => item.Matches(new
+			{
+				Filename = "sample",
+				Extension = ".cs",
+				Kind = PackageItemKind.None,
+				PackagePath = @"contentFiles\cs\monoandroid\sample.cs", 
+				TargetPath = @"contentFiles\cs\monoandroid\sample.cs",
+			}));
+		}
+
 	}
 }

@@ -452,7 +452,12 @@ Please install the 'NuGet.Build.Packaging' package in the following projects to 
 						 Condition="'$(IncludeContent)' == 'true'">
 				<Kind>Content</Kind>
 			</PackageFile>
-			
+
+			<PackageFile Include="@(_NoneWithTargetPath)"
+						 Condition="'%(_NoneWithTargetPath.IncludeInPackage)' == 'true'">
+				<Kind>None</Kind>
+			</PackageFile>
+
 			<PackageFile Include="@(PackageReference)">
 				<Kind>Dependency</Kind>
 			</PackageFile>

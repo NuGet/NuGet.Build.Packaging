@@ -9,6 +9,10 @@
 		<Content Include="Resources\**\*.*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+		<None Include="contentFiles\cs\monoandroid\sample.cs">
+			<IncludeInPackage>true</IncludeInPackage>
+		</None>
+		<None Include="none.txt" />
 	</ItemGroup>
 	<Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), Scenario.targets))\Scenario.targets" />
 </Project>
