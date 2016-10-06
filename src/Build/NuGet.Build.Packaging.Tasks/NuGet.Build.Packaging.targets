@@ -18,6 +18,7 @@ Copyright (c) .NET Foundation. All rights reserved.
 	<PropertyGroup>
 		<IncludeOutputs Condition="'$(IncludeOutputs)' == ''">true</IncludeOutputs>
 		<IncludeSymbols Condition="'$(IncludeSymbols)' == '' and '$(IncludeOutputs)' == 'true' and '$(Configuration)' == 'Debug'">true</IncludeSymbols>
+		<IncludeContent Condition="'$(IncludeContent)' == ''">true</IncludeContent>
 		<IncludeFrameworkReferences Condition="'$(IncludeFrameworkReferences)' == ''">true</IncludeFrameworkReferences>
 
 		<PackageRequireLicenseAcceptance Condition="'$(PackageRequireLicenseAcceptance)' == ''">false</PackageRequireLicenseAcceptance>
@@ -446,6 +447,12 @@ Please install the 'NuGet.Build.Packaging' package in the following projects to 
 				<Kind>Lib</Kind>
 			</PackageFile>
 
+			<!-- @ContentFilesProjectOutputGroupOutput = @(ContentWithTargetPath->'%(FullPath)') -->
+			<PackageFile Include="@(ContentFilesProjectOutputGroupOutput)"
+						 Condition="'$(IncludeContent)' == 'true'">
+				<Kind>Content</Kind>
+			</PackageFile>
+			
 			<PackageFile Include="@(PackageReference)">
 				<Kind>Dependency</Kind>
 			</PackageFile>
