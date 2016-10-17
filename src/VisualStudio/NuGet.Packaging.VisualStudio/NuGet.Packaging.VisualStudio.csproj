@@ -21,6 +21,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
@@ -91,8 +92,8 @@
     <Compile Include="ExtenderProviders\LibraryProjectExtender.cs" />
     <Compile Include="ExtenderProviders\LibraryProjectExtenderProvider.cs" />
     <Compile Include="Extensions\IVsUIShellExtensions.cs" />
-    <Compile Include="IMsBuildService.cs" />
-    <Compile Include="MsBuildService.cs" />
+    <Compile Include="IBuildService.cs" />
+    <Compile Include="BuildService.cs" />
     <Compile Include="ProjectSystem.Dev14\GlobalPropertiesProvider.cs" />
     <Compile Include="ProjectSystem.Dev14\NuProjCapabilities.cs" />
     <Compile Include="ProjectSystem.Dev14\NuProjConfiguredProject.cs" />
@@ -152,6 +153,7 @@
     <None Include="ProjectSystem.Dev15\NuProjProjectTreeModifier.cs" />
     <None Include="ProjectSystem.Dev15\NuProjUnconfiguredProject.cs" />
     <None Include="ProjectSystem.Dev15\NuProjValidProjectReferenceChecker.cs" />
+    <Compile Include="Views\ViewModelBase.cs" />
     <Compile Include="Wizards\MultiPlatformWizard.cs" />
     <None Include="NuGet.Packaging.VisualStudio.targets">
       <SubType>Designer</SubType>
