@@ -153,6 +153,7 @@
     <None Include="ProjectSystem.Dev15\NuProjProjectTreeModifier.cs" />
     <None Include="ProjectSystem.Dev15\NuProjUnconfiguredProject.cs" />
     <None Include="ProjectSystem.Dev15\NuProjValidProjectReferenceChecker.cs" />
+    <Compile Include="Views\ViewModelBase.cs" />
     <Compile Include="Wizards\MultiPlatformWizard.cs" />
     <None Include="NuGet.Packaging.VisualStudio.targets">
       <SubType>Designer</SubType>
