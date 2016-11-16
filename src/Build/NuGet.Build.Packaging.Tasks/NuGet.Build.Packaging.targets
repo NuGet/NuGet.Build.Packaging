@@ -381,7 +381,7 @@ Copyright (c) .NET Foundation. All rights reserved.
 			Outputs="%(_MSBuildProjectReferenceExistent.Identity)-BATCH">
 		
 		<MSBuild Projects="@(_MSBuildProjectReferenceExistent)"
-				 Targets="GetTargetPath"
+				 Targets="GetTargetPathWithTargetPlatformMoniker"
 				 BuildInParallel="$(BuildInParallel)"
 				 Properties="%(_MSBuildProjectReferenceExistent.SetConfiguration); %(_MSBuildProjectReferenceExistent.SetPlatform)"
 				 RemoveProperties="%(_MSBuildProjectReferenceExistent.GlobalPropertiesToRemove)">
