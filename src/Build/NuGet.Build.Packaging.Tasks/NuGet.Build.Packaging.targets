@@ -63,6 +63,11 @@ Copyright (c) .NET Foundation. All rights reserved.
 			<IsPackable>$(IsPackable)</IsPackable>
 			<IsNuGetized>$(IsNuGetized)</IsNuGetized>
 		</TargetPathWithTargetPlatformMoniker>
+		<!-- Design Time is annoying and uses a different output item group to return this. Also adust that -->
+		<_MainProjectOutput>
+			<IsPackable>$(IsPackable)</IsPackable>
+			<IsNuGetized>$(IsNuGetized)</IsNuGetized>
+		</_MainProjectOutput>
 	</ItemDefinitionGroup>
 
 	<!--
