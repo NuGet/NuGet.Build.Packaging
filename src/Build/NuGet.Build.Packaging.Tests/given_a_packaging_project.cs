@@ -22,7 +22,7 @@ namespace NuGet.Build.Packaging
 		[Fact]
 		public void when_getting_contents_then_issues_warning_for_missing_nuget()
 		{
-			var result = Builder.BuildScenario(nameof(given_a_packaging_project), target: "GetPackageContents", output: output);
+			var result = Builder.BuildScenario(nameof(given_a_packaging_project), target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 			Assert.Contains(result.Logger.Warnings, warning => warning.Code == "NG1001");
@@ -31,7 +31,7 @@ namespace NuGet.Build.Packaging
 		[Fact]
 		public void when_getting_contents_then_includes_referenced_project_outputs()
 		{
-			var result = Builder.BuildScenario(nameof(given_a_packaging_project), target: "GetPackageContents", output: output);
+			var result = Builder.BuildScenario(nameof(given_a_packaging_project), target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 
@@ -52,7 +52,7 @@ namespace NuGet.Build.Packaging
 		[Fact]
 		public void when_getting_contents_then_includes_referenced_project_satellite_assembly()
 		{
-			var result = Builder.BuildScenario(nameof(given_a_packaging_project), target: "GetPackageContents", output: output);
+			var result = Builder.BuildScenario(nameof(given_a_packaging_project), target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 
@@ -65,7 +65,7 @@ namespace NuGet.Build.Packaging
 		[Fact]
 		public void when_getting_contents_then_includes_referenced_project_dependencies()
 		{
-			var result = Builder.BuildScenario(nameof(given_a_packaging_project), target: "GetPackageContents", output: output);
+			var result = Builder.BuildScenario(nameof(given_a_packaging_project), target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 
@@ -82,7 +82,7 @@ namespace NuGet.Build.Packaging
 		[Fact]
 		public void when_getting_contents_then_includes_referenced_project_dependency_satellite_assembly()
 		{
-			var result = Builder.BuildScenario(nameof(given_a_packaging_project), target: "GetPackageContents", output: output);
+			var result = Builder.BuildScenario(nameof(given_a_packaging_project), target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 
@@ -95,7 +95,7 @@ namespace NuGet.Build.Packaging
 		[Fact]
 		public void when_getting_contents_then_includes_referenced_packagable_project_as_dependency()
 		{
-			var result = Builder.BuildScenario(nameof(given_a_packaging_project), target: "GetPackageContents", output: output);
+			var result = Builder.BuildScenario(nameof(given_a_packaging_project), target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 
@@ -109,7 +109,7 @@ namespace NuGet.Build.Packaging
 		[Fact]
 		public void when_getting_contents_then_does_not_include_referenced_project_nuget_assembly_reference()
 		{
-			var result = Builder.BuildScenario(nameof(given_a_packaging_project), target: "GetPackageContents", output: output);
+			var result = Builder.BuildScenario(nameof(given_a_packaging_project), target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 
@@ -122,7 +122,7 @@ namespace NuGet.Build.Packaging
 		[Fact]
 		public void when_getting_contents_from_packaging_project_then_referenced_outputs_have_original_tfm_path()
 		{
-			var result = Builder.BuildScenario(nameof(given_a_packaging_project), target: "GetPackageContents", output: output);
+			var result = Builder.BuildScenario(nameof(given_a_packaging_project), target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 
