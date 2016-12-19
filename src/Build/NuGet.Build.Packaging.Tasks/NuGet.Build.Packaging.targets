@@ -201,7 +201,6 @@ Copyright (c) .NET Foundation. All rights reserved.
 		</GetPackageContentsDependsOn>
 		<GetPackageContentsDependsOn>
 			$(GetPackageContentsDependsOn);
-			GetPackageTargetPath;
 			AssignProjectConfiguration;
 			_SplitProjectReferencesByFileExistence;
 			_SplitProjectReferencesByIsPackablePresence;
@@ -277,13 +276,6 @@ Copyright (c) .NET Foundation. All rights reserved.
 			</PackageFile>
 		</ItemGroup>
 
-		<!-- If packaging the project, provide the metadata as a non-file item -->
-		<ItemGroup Condition="'$(PackageId)' != ''">
-			<PackageFile Include="@(PackageTargetPath->'%(Id)')">
-				<Kind>Metadata</Kind>
-			</PackageFile>
-		</ItemGroup>
-
 		<ItemGroup>
 			<PackageFile>
 				<PackageId>$(PackageId)</PackageId>
@@ -297,7 +289,7 @@ Copyright (c) .NET Foundation. All rights reserved.
 		</AssignPackagePath>
 
 		<MSBuild Projects="@(_IsPackableProject)"
-				 Targets="GetPackageContents"
+				 Targets="GetFinalPackageContents"
 				 BuildInParallel="$(BuildInParallel)"
 				 Properties="%(_IsPackableProject.SetConfiguration); %(_IsPackableProject.SetPlatform); BuildingPackage=$(BuildingPackage)"
 				 Condition="'@(ProjectReferenceWithConfiguration)' != '' and '@(_IsPackableProject)' != ''"
@@ -366,6 +358,35 @@ Copyright (c) .NET Foundation. All rights reserved.
 						   Kinds="@(PackageItemKind)"
 						   IsPackaging="$(BuildingPackage)"
 						   Condition="'@(_ReferencedPackageContentWithOriginalValues)' != '' Or '@(_ReferencedPackageDependency)' != ''">
+			<Output TaskParameter="AssignedFiles" ItemName="_PackageContent" />
+		</AssignPackagePath>
+	</Target>
+
+	<!-- Separate out the final package file, which is a description of the package itself, into a separate target.
+		 This allows users to craft the description of the package (version, id, etc.) based on the contents if they so choose. 
+	-->
+	<PropertyGroup>
+		<GetFinalPackageContentsDependsOn>
+			$(GetFinalPackageContentsDependsOn);
+			GetPackageContents;
+			GetPackageTargetPath;
+		</GetFinalPackageContentsDependsOn>
+	</PropertyGroup>
+	<Target Name="GetFinalPackageContents" DependsOnTargets="$(GetFinalPackageContentsDependsOn)" Returns="@(_PackageContent)">
+		<!-- If packaging the project, provide the metadata as a non-file item -->
+		<ItemGroup Condition="'$(PackageId)' != ''">
+			<_SelfReferentialPackageFile Include="@(PackageTargetPath->'%(Id)')">
+				<Kind>Metadata</Kind>
+				<PackageId>$(PackageId)</PackageId>
+				<Platform>$(Platform)</Platform>
+				<TargetFrameworkMoniker Condition="'$(IsPackagingProject)' != 'true'">$(TargetFrameworkMoniker)</TargetFrameworkMoniker>
+			</_SelfReferentialPackageFile>
+		</ItemGroup>
+
+		<AssignPackagePath Files="@(_SelfReferentialPackageFile)"
+						   Kinds="@(PackageItemKind)"
+						   IsPackaging="$(BuildingPackage)"
+						   Condition="'@(_SelfReferentialPackageFile)' != ''">
 			<Output TaskParameter="AssignedFiles" ItemName="_PackageContent" />
 		</AssignPackagePath>
 	</Target>
@@ -625,7 +646,7 @@ Copyright (c) .NET Foundation. All rights reserved.
 		<PackDependsOn>
 			$(PackDependsOn)
 			GetPackageTargetPath;
-			GetPackageContents;
+			GetFinalPackageContents;
 			_GenerateReferenceAssemblies;
 		</PackDependsOn>
 	</PropertyGroup>

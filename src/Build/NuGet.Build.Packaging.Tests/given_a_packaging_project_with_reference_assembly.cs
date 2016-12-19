@@ -22,7 +22,7 @@ namespace NuGet.Build.Packaging
 		[Fact]
 		public void when_getting_contents_then_includes_reference_assembly()
 		{
-			var result = Builder.BuildScenario(nameof(given_a_packaging_project_with_reference_assembly), target: "GetPackageContents", output: output);
+			var result = Builder.BuildScenario(nameof(given_a_packaging_project_with_reference_assembly), target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 

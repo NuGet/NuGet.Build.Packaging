@@ -26,7 +26,7 @@ namespace NuGet.Build.Packaging
 			{
 				Configuration = "Release",
 				IncludeFrameworkReferences = "false",
-			}, projectName: "a", target: "GetPackageContents", output: output);
+			}, projectName: "a", target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 			Assert.Contains(result.Logger.Warnings, warning => warning.Code == "NG1001");
@@ -62,7 +62,7 @@ namespace NuGet.Build.Packaging
 			{
 				Configuration = "Release",
 				IncludeFrameworkReferences = "false",
-			}, projectName: "a", target: "GetPackageContents", output: output);
+			}, projectName: "a", target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 
@@ -87,7 +87,7 @@ namespace NuGet.Build.Packaging
 			{
 				Configuration = "Release",
 				IncludeFrameworkReferences = "false",
-			}, projectName: "a", target: "GetPackageContents", output: output);
+			}, projectName: "a", target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 
@@ -104,7 +104,7 @@ namespace NuGet.Build.Packaging
 			{
 				Configuration = "Release",
 				IncludeFrameworkReferences = "false",
-			}, projectName: "a", target: "GetPackageContents", output: output);
+			}, projectName: "a", target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 
@@ -125,7 +125,7 @@ namespace NuGet.Build.Packaging
 			{
 				Configuration = "Release",
 				IncludeFrameworkReferences = "false",
-			}, projectName: "a", target: "GetPackageContents", output: output);
+			}, projectName: "a", target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 
@@ -142,7 +142,7 @@ namespace NuGet.Build.Packaging
 			{
 				Configuration = "Release",
 				IncludeFrameworkReferences = "false",
-			}, projectName: "a", target: "GetPackageContents", output: output);
+			}, projectName: "a", target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 

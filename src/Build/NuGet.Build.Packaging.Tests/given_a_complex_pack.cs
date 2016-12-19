@@ -36,7 +36,7 @@ namespace NuGet.Build.Packaging
 		[Fact]
 		public void when_preparing_a_then_contains_assemblies_and_direct_dependency()
 		{
-			var result = Builder.BuildScenario(nameof(given_a_complex_pack), new { Configuration = "Release" }, projectName: "a", target: "GetPackageContents", output: output);
+			var result = Builder.BuildScenario(nameof(given_a_complex_pack), new { Configuration = "Release" }, projectName: "a", target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 
@@ -72,7 +72,7 @@ namespace NuGet.Build.Packaging
 		[Fact]
 		public void when_preparing_b_then_contains_assemblies_and_direct_dependency()
 		{
-			var result = Builder.BuildScenario(nameof(given_a_complex_pack), new { Configuration = "Release" }, projectName: "b", target: "GetPackageContents", output: output);
+			var result = Builder.BuildScenario(nameof(given_a_complex_pack), new { Configuration = "Release" }, projectName: "b", target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 
@@ -108,7 +108,7 @@ namespace NuGet.Build.Packaging
 		[Fact]
 		public void when_preparing_c_then_contains_external_dependency()
 		{
-			var result = Builder.BuildScenario(nameof(given_a_complex_pack), new { Configuration = "Release" }, projectName: "c", target: "GetPackageContents", output: output);
+			var result = Builder.BuildScenario(nameof(given_a_complex_pack), new { Configuration = "Release" }, projectName: "c", target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 
@@ -136,7 +136,7 @@ namespace NuGet.Build.Packaging
 		[Fact]
 		public void when_preparing_d_without_package_id_then_does_not_set_package_path()
 		{
-			var result = Builder.BuildScenario(nameof(given_a_complex_pack), projectName: "d", target: "GetPackageContents", output: output);
+			var result = Builder.BuildScenario(nameof(given_a_complex_pack), projectName: "d", target: "GetFinalPackageContents", output: output);
 
 			Assert.Equal(TargetResultCode.Success, result.ResultCode);
 
