@@ -15,6 +15,9 @@ Copyright (c) .NET Foundation. All rights reserved.
 
 	<PropertyGroup>
 		<ProjectSystemRulesDir Condition="'$(ProjectSystemRulesDir)' == ''">$(MSBuildThisFileDirectory)..\Rules\</ProjectSystemRulesDir>
+		<RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+		<NuGetTargetFramework>dotnet</NuGetTargetFramework>
+		<PackageTargetFallback>dotnet;netstandard1.0;netstandard1.1;netstandard1.2;netstandard1.3;netstandard1.4;netstandard1.5;netstandard1.6;net20;net35;net40;native;monoandroid;xamarinios10</PackageTargetFallback>
 	</PropertyGroup>
 
 	<ItemGroup>

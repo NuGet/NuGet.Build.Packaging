@@ -29,7 +29,6 @@
 		<OutputPath>bin\$(Configuration)\</OutputPath>
 	</PropertyGroup>
 	<ItemGroup>
-		<None Include="project.json" />
 		<None Include="$projectname$.targets" />
 	</ItemGroup>
 	<ItemGroup>
