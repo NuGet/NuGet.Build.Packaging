@@ -17,6 +17,8 @@
 		public const string Language = "NuGet";
 		public const string NuGetAuthoringPathPropertyName = "NuGetAuthoringPath";
 
+		public const string PackageReferenceItemName = "PackageReference";
+
 		public class UIContext
 		{
 			public const string AddPlatformImplementation = "2590DF87-84EB-487A-A1FF-160BEAF4F9CA";
