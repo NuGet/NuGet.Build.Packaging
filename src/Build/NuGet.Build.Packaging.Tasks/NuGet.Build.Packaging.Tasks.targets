@@ -1,101 +1,101 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-	<ItemGroup>
-		<ThisAssemblyProjectProperty Include="PackageId" />
-	</ItemGroup>
-	
-	<PropertyGroup>
-		<PackageId>NuGet.Build.Packaging</PackageId>
-		<Authors>Microsoft</Authors>
-		<Owners>Microsoft</Owners>
-		<Copyright>&#169; .NET Foundation. All rights reserved.</Copyright>
-		<Title>NuGetizer-3000</Title>
-		<Description>NuGet Packaging Targets</Description>
-		<NeutralLanguage>en</NeutralLanguage>
-		<IsDevelopmentDependency>true</IsDevelopmentDependency>
-		<PackageLicenseUrl>https://raw.githubusercontent.com/NuGet/NuGet.Build.Packaging/dev/LICENSE.txt</PackageLicenseUrl>
-		<PackageProjectUrl>https://github.com/NuGet/NuGet.Build.Packaging</PackageProjectUrl>
+  <ItemGroup>
+    <ThisAssemblyProjectProperty Include="PackageId" />
+  </ItemGroup>
 
-		<InferLegacyPackageReferences>false</InferLegacyPackageReferences>
-		<IncludeContentInPackage>false</IncludeContentInPackage>
-		<IncludeOutputsInPackage>false</IncludeOutputsInPackage>
-		<IncludeSymbolsInPackage>false</IncludeSymbolsInPackage>
-		<IncludeFrameworkReferencesInPackage>false</IncludeFrameworkReferencesInPackage>
-	</PropertyGroup>
+  <PropertyGroup>
+    <PackageId>NuGet.Build.Packaging</PackageId>
+    <Authors>Microsoft</Authors>
+    <Owners>Microsoft</Owners>
+    <Copyright>&#169; .NET Foundation. All rights reserved.</Copyright>
+    <Title>NuGetizer-3000</Title>
+    <Description>NuGet Packaging Targets</Description>
+    <NeutralLanguage>en</NeutralLanguage>
+    <IsDevelopmentDependency>true</IsDevelopmentDependency>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/NuGet/NuGet.Build.Packaging/dev/LICENSE.txt</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/NuGet/NuGet.Build.Packaging</PackageProjectUrl>
 
-	<Import Project="$(OutputPath)NuGet.Build.Packaging.targets" 
+    <InferLegacyPackageReferences>false</InferLegacyPackageReferences>
+    <IncludeContentInPackage>false</IncludeContentInPackage>
+    <IncludeOutputsInPackage>false</IncludeOutputsInPackage>
+    <IncludeSymbolsInPackage>false</IncludeSymbolsInPackage>
+    <IncludeFrameworkReferencesInPackage>false</IncludeFrameworkReferencesInPackage>
+  </PropertyGroup>
+
+  <Import Project="$(OutputPath)NuGet.Build.Packaging.targets"
 			Condition="'$(PackOnBuild)' == 'true' and Exists('$(OutputPath)NuGet.Build.Packaging.targets')" />
-	
-	<Target Name="AddBuiltOutput" BeforeTargets="GetPackageContents" DependsOnTargets="AllProjectOutputGroups" Returns="@(PackageFile)">
-		<!-- Update packaging version targets -->
-		<PropertyGroup>
-			<XmlNs>&lt;Namespace Prefix='msb' Uri='http://schemas.microsoft.com/developer/msbuild/2003'/&gt;</XmlNs>
-		</PropertyGroup>
-		<XmlPoke Namespaces="$(XmlNs)"
+
+  <Target Name="AddBuiltOutput" BeforeTargets="GetPackageContents" DependsOnTargets="AllProjectOutputGroups" Returns="@(PackageFile)">
+    <!-- Update packaging version targets -->
+    <PropertyGroup>
+      <XmlNs>&lt;Namespace Prefix='msb' Uri='http://schemas.microsoft.com/developer/msbuild/2003'/&gt;</XmlNs>
+    </PropertyGroup>
+    <XmlPoke Namespaces="$(XmlNs)"
 				 XmlInputPath="$(OutputPath)NuGet.Build.Packaging.Version.props"
 				 Query="/msb:Project/msb:PropertyGroup/msb:PackagingTargetsVersion"
 				 Value="$(PackageVersion)"/>
-		
-		<ItemGroup>
-			<PackageFile Include="$(OutputPath)ApiIntersect.exe">
-				<PackagePath>build\ApiIntersect.exe</PackagePath>
-			</PackageFile>
-			<PackageFile Include="$(OutputPath)ApiIntersect.exe.config">
-				<PackagePath>build\ApiIntersect.exe.config</PackagePath>
-			</PackageFile>
-			<PackageFile Include="$(OutputPath)ICSharpCode.Decompiler.dll">
-				<PackagePath>build\ICSharpCode.Decompiler.dll</PackagePath>
-			</PackageFile>
-			<PackageFile Include="$(OutputPath)ICSharpCode.NRefactory.CSharp.dll">
-				<PackagePath>build\ICSharpCode.NRefactory.CSharp.dll</PackagePath>
-			</PackageFile>
-			<PackageFile Include="$(OutputPath)ICSharpCode.NRefactory.dll">
-				<PackagePath>build\ICSharpCode.NRefactory.dll</PackagePath>
-			</PackageFile>
-			<PackageFile Include="$(OutputPath)Mono.Cecil.dll">
-				<PackagePath>build\Mono.Cecil.dll</PackagePath>
-			</PackageFile>
-			<PackageFile Include="$(OutputPath)Mono.Options.dll">
-				<PackagePath>build\Mono.Options.dll</PackagePath>
-			</PackageFile>
-			<PackageFile Include="$(OutputPath)NuGet.Build.Packaging.Version.props">
-				<PackagePath>build\NuGet.Build.Packaging.Version.props</PackagePath>
-			</PackageFile>
-			<PackageFile Include="@(ContentWithTargetPath)">
-				<PackagePath>build\%(ContentWithTargetPath.TargetPath)</PackagePath>
-			</PackageFile>
-			<PackageFile Include="@(BuiltProjectOutputGroupOutput -> '%(FinalOutputPath)')">
-				<PackagePath>build\%(Filename)%(Extension)</PackagePath>
-			</PackageFile>
-			<PackageFile Include="@(DebugSymbolsProjectOutputGroupOutput -> '%(FinalOutputPath)')">
-				<PackagePath>build\%(Filename)%(Extension)</PackagePath>
-			</PackageFile>
-		</ItemGroup>
-	</Target>
 
-	<PropertyGroup>
-		<CoreCompileDependsOn>
-			PackageItemKind;
-			$(CoreCompileDependsOn);
-		</CoreCompileDependsOn>
-		<PackageItemKindFile>$(IntermediateOutputPath)PackageItemKind.g$(DefaultLanguageSourceExtension)</PackageItemKindFile>
-	</PropertyGroup>
+    <ItemGroup>
+      <PackageFile Include="$(OutputPath)ApiIntersect.exe">
+        <PackagePath>build\ApiIntersect.exe</PackagePath>
+      </PackageFile>
+      <PackageFile Include="$(OutputPath)ApiIntersect.exe.config">
+        <PackagePath>build\ApiIntersect.exe.config</PackagePath>
+      </PackageFile>
+      <PackageFile Include="$(OutputPath)ICSharpCode.Decompiler.dll">
+        <PackagePath>build\ICSharpCode.Decompiler.dll</PackagePath>
+      </PackageFile>
+      <PackageFile Include="$(OutputPath)ICSharpCode.NRefactory.CSharp.dll">
+        <PackagePath>build\ICSharpCode.NRefactory.CSharp.dll</PackagePath>
+      </PackageFile>
+      <PackageFile Include="$(OutputPath)ICSharpCode.NRefactory.dll">
+        <PackagePath>build\ICSharpCode.NRefactory.dll</PackagePath>
+      </PackageFile>
+      <PackageFile Include="$(OutputPath)Mono.Cecil.dll">
+        <PackagePath>build\Mono.Cecil.dll</PackagePath>
+      </PackageFile>
+      <PackageFile Include="$(OutputPath)Mono.Options.dll">
+        <PackagePath>build\Mono.Options.dll</PackagePath>
+      </PackageFile>
+      <PackageFile Include="$(OutputPath)NuGet.Build.Packaging.Version.props">
+        <PackagePath>build\NuGet.Build.Packaging.Version.props</PackagePath>
+      </PackageFile>
+      <PackageFile Include="@(ContentWithTargetPath)">
+        <PackagePath>build\%(ContentWithTargetPath.TargetPath)</PackagePath>
+      </PackageFile>
+      <PackageFile Include="@(BuiltProjectOutputGroupOutput -> '%(FinalOutputPath)')">
+        <PackagePath>build\%(Filename)%(Extension)</PackagePath>
+      </PackageFile>
+      <PackageFile Include="@(DebugSymbolsProjectOutputGroupOutput -> '%(FinalOutputPath)')">
+        <PackagePath>build\%(Filename)%(Extension)</PackagePath>
+      </PackageFile>
+    </ItemGroup>
+  </Target>
 
-	<Target Name="PackageItemKind" BeforeTargets="BuildOnlySettings" DependsOnTargets="GeneratePackageItemKind">
-		<ItemGroup>
-			<Compile Include="$(PackageItemKindFile)" />
-		</ItemGroup>
-	</Target>
+  <PropertyGroup>
+    <CoreCompileDependsOn>
+      PackageItemKind;
+      $(CoreCompileDependsOn);
+    </CoreCompileDependsOn>
+    <PackageItemKindFile>$(IntermediateOutputPath)PackageItemKind.g$(DefaultLanguageSourceExtension)</PackageItemKindFile>
+  </PropertyGroup>
 
-	<Target Name="GeneratePackageItemKind" Inputs="$(MSBuildThisFileFullPath);NuGet.Build.Packaging.props" Outputs="$(PackageItemKindFile)">
-		<MakeDir Directories="$(IntermediateOutputPath)" Condition=" !Exists('$(IntermediateOutputPath)') " />
-		<XmlPeek Namespaces="&lt;Namespace Prefix='msb' Uri='http://schemas.microsoft.com/developer/msbuild/2003'/&gt;"
+  <Target Name="PackageItemKind" BeforeTargets="BuildOnlySettings" DependsOnTargets="GeneratePackageItemKind">
+    <ItemGroup>
+      <Compile Include="$(PackageItemKindFile)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="GeneratePackageItemKind" Inputs="$(MSBuildThisFileFullPath);NuGet.Build.Packaging.props" Outputs="$(PackageItemKindFile)">
+    <MakeDir Directories="$(IntermediateOutputPath)" Condition=" !Exists('$(IntermediateOutputPath)') " />
+    <XmlPeek Namespaces="&lt;Namespace Prefix='msb' Uri='http://schemas.microsoft.com/developer/msbuild/2003'/&gt;"
 					 Query="/msb:Project/msb:ItemGroup/msb:PackageItemKind/@Include"
 					 XmlInputPath="$(MSBuildThisProjectDirectory)NuGet.Build.Packaging.props">
-			<Output TaskParameter="Result" ItemName="_PackageItemKind" />
-		</XmlPeek>
+      <Output TaskParameter="Result" ItemName="_PackageItemKind" />
+    </XmlPeek>
 
-		<WriteLinesToFile Lines='
+    <WriteLinesToFile Lines='
 namespace $(RootNamespace)
 {
 	/// &lt;summary&gt;Available Kind metadata for PackageFile and _PackageContent items&lt;/summary&gt;
@@ -103,19 +103,78 @@ namespace $(RootNamespace)
 	{
 ' Overwrite='true' File='$(PackageItemKindFile)' />
 
-		<WriteLinesToFile Lines='				  
+    <WriteLinesToFile Lines='				  
 		/// &lt;summary&gt;Kind: %(_PackageItemKind.Identity)&lt;/summary&gt;
 		public const string %(_PackageItemKind.Identity) = nameof(%(_PackageItemKind.Identity))%3B
 ' Overwrite='false' File='$(PackageItemKindFile)' />
 
-		<WriteLinesToFile Lines='
+    <WriteLinesToFile Lines='
 	}
 }
 ' Overwrite='false' File='$(PackageItemKindFile)' />
 
-		<ItemGroup>
-			<FileWrites Include="$(PackageItemKindFile)" />
-		</ItemGroup>
-	</Target>
-	
+    <ItemGroup>
+      <FileWrites Include="$(PackageItemKindFile)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="ILRepackAssemblies" DependsOnTargets="ResolveReferences" BeforeTargets="ILRepack" Returns="@(ReferenceCopyLocalPaths)">
+    <ItemGroup>
+      <ReferenceCopyLocalPaths>
+        <ILRepack>false</ILRepack>
+        <ILRepack Condition="$([System.String]::new('%(FileName)').StartsWith('Newtonsoft')) Or
+                             $([System.String]::new('%(FileName)').StartsWith('NuGet'))">true</ILRepack>
+      </ReferenceCopyLocalPaths>
+    </ItemGroup>
+  </Target>
+
+  <!-- TODO: from here down, remove when https://github.com/gluck/il-repack/pull/196 is merged and published -->
+  <PropertyGroup>
+    <ILRepack>"$(ILRepack)"</ILRepack>
+    <ILRepack Condition="'$(OS)' != 'Windows_NT'">mono $(ILRepack)</ILRepack>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup>
+    <ReferenceCopyLocalPaths>
+      <ILRepack>true</ILRepack>
+    </ReferenceCopyLocalPaths>
+  </ItemDefinitionGroup>
+
+  <Target Name="ILRepack"
+			AfterTargets="CoreCompile"
+			DependsOnTargets="CoreCompile"
+			Inputs="@(IntermediateAssembly)"
+			Outputs="$(TargetPath)"
+			Returns="@(_MergedAssemblies)">
+
+    <GetReferenceAssemblyPaths BypassFrameworkInstallChecks="False" TargetFrameworkMoniker="$(TargetFrameworkMoniker)">
+      <Output TaskParameter="FullFrameworkReferenceAssemblyPaths" PropertyName="FullFrameworkReferenceAssemblyPaths" />
+    </GetReferenceAssemblyPaths>
+
+    <PropertyGroup>
+      <_KeyFileArg Condition="'$(AssemblyOriginatorKeyFile)' != ''">/keyfile:&quot;$(AssemblyOriginatorKeyFile)&quot;</_KeyFileArg>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_MergedAssemblies Include="@(ReferenceCopyLocalPaths)" 
+                         Condition="'%(ReferenceCopyLocalPaths.ILRepack)' == 'true'" />
+      <_AssembliesDir Include="@(ReferenceCopyLocalPaths -> '%(RootDir)%(Directory)')" />
+      <_LibDir Include="@(_AssembliesDir -> Distinct())" />
+    </ItemGroup>
+    
+    <Exec Command="$(ILRepack) @(_LibDir->'/lib:&quot;%(Identity).&quot;', ' ') /internalize $(_KeyFileArg) /targetplatform:&quot;v4,$(FullFrameworkReferenceAssemblyPaths.TrimEnd(\\))&quot; /out:&quot;@(IntermediateAssembly->'%(FullPath)')&quot; &quot;@(IntermediateAssembly->'%(FullPath)')&quot; @(_MergedAssemblies->'&quot;%(FullPath)&quot;', ' ')"
+			  StandardErrorImportance="high"
+			  StandardOutputImportance="low"
+			  ConsoleToMSBuild="true"
+			  ContinueOnError="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="_ILRepackOutput"/>
+      <Output TaskParameter="ExitCode" PropertyName="_ILRepackExitCode"/>
+    </Exec>
+    
+    <Message Importance="high" Text="$(_ILRepackOutput)" Condition="'$(_ILRepackExitCode)' != '0'" />
+    <Error Text="$(_ILRepackOutput)" Condition="'$(_ILRepackExitCode)' != '0'" />
+    <Delete Files="@(_MergedAssemblies -> '$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
+
+  </Target>
+
 </Project>

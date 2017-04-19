@@ -4,9 +4,8 @@ using System.IO;
 using System.Linq;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-using static NuGet.Build.Packaging.Properties.Strings;
-using static NuGet.Client.ManagedCodeConventions;
 using NuGet.Packaging;
+using static NuGet.Build.Packaging.Properties.Strings;
 
 namespace NuGet.Build.Packaging.Tasks
 {
