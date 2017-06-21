@@ -6,7 +6,7 @@
 		<Description xml:space="preserve">NuGet Package Authoring Tools</Description>
 		<License>LICENSE.txt</License>
 	</Metadata>
-	<Installation>
+	<Installation AllUsers="true">
 		<InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0,)" />
 	</Installation>
 	<Prerequisites>
