@@ -158,7 +158,7 @@ namespace NuGet.Build.Packaging.Tasks
 
 		void AddFiles(Manifest manifest)
 		{
-			// Remove duplcate files
+			// Remove duplicate files
 			var contents = Contents
 				.Where(item => !string.IsNullOrEmpty(item.GetMetadata(MetadataName.PackagePath)))
 				.GroupBy(item => item.GetMetadata(MetadataName.PackagePath))
