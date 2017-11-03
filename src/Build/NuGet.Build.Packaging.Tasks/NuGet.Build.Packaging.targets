@@ -233,7 +233,7 @@ Copyright (c) .NET Foundation. All rights reserved.
 
 	<Target Name="_GetReferencedPackageContents"
 			Condition="'$(_SupportsProjectReferences)' == 'true'"
-			DependsOnTargets="$(_GetReferencedPackageContentsDependsOn)" 
+			DependsOnTargets="$(_GetReferencedPackageContentsDependsOn)"
 			Returns="@(PackageFile)">
 		<Error Condition="'@(_NonNuGetizedProjectReference)' != ''"
 				   Code="NG0011"
@@ -374,7 +374,7 @@ Copyright (c) .NET Foundation. All rights reserved.
 	-->
 	<Target Name="Pack" DependsOnTargets="$(PackDependsOn)" Returns="@(PackageTargetPath)" Condition="'$(IsPackable)' == 'true'">
 		<MakeDir Directories="$(PackageOutputPath)" Condition="!Exists('$(PackageOutputPath)')" />
-		<CreatePackage Manifest="@(PackageTargetPath)" NuspecFile="$(NuspecFile)" Contents="@(_PackageContent)" TargetPath="@(PackageTargetPath->'%(FullPath)')">
+		<CreatePackage Manifest="@(PackageTargetPath)" NuspecFile="$(NuspecFile)" BaseNuspecFile="$(BaseNuspecFile)" Contents="@(_PackageContent)" TargetPath="@(PackageTargetPath->'%(FullPath)')">
 			<Output TaskParameter="OutputPackage" ItemName="_PackageTargetPath" />
 			<Output TaskParameter="OutputPackage" ItemName="FileWrites" />
 		</CreatePackage>

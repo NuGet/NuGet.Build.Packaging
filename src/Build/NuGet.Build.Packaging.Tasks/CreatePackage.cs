@@ -26,6 +26,9 @@ namespace NuGet.Build.Packaging.Tasks
 
 		public string NuspecFile { get; set; }
 
+		public string BaseNuspecFile { get; set; }
+
+
 		[Output]
 		public ITaskItem OutputPackage { get; set; }
 
@@ -40,7 +43,7 @@ namespace NuGet.Build.Packaging.Tasks
 
 				OutputPackage = new TaskItem(TargetPath);
 				Manifest.CopyMetadataTo(OutputPackage);
-					 
+
 				return !Log.HasLoggedErrors;
 			}
 			catch (Exception ex)
@@ -65,6 +68,16 @@ namespace NuGet.Build.Packaging.Tasks
 		public Manifest CreateManifest()
 		{
 			var metadata = new ManifestMetadata();
+
+			if (!string.IsNullOrEmpty(BaseNuspecFile))
+			{
+				using (var stream = File.OpenRead(BaseNuspecFile))
+				{
+					var baesManifest = NuGet.Packaging.Manifest.ReadFrom(stream, false);
+					metadata = baesManifest.Metadata;
+
+				}
+			}
 
 			metadata.Id = Manifest.GetMetadata("Id");
 			metadata.Version = NuGetVersion.Parse(Manifest.GetMetadata(MetadataName.Version));
@@ -106,7 +119,7 @@ namespace NuGet.Build.Packaging.Tasks
 		void AddDependencies(Manifest manifest)
 		{
 			var dependencies = from item in Contents
-							   where item.GetMetadata(MetadataName.Kind) == PackageItemKind.Dependency && 
+							   where item.GetMetadata(MetadataName.Kind) == PackageItemKind.Dependency &&
 									 !"all".Equals(item.GetMetadata(MetadataName.PrivateAssets), StringComparison.OrdinalIgnoreCase)
 							   select new Dependency
 							   {
@@ -140,12 +153,12 @@ namespace NuGet.Build.Packaging.Tasks
 					definedDependencyGroups.Add(targetFramework.GetFrameworkString(),
 												new PackageDependencyGroup(targetFramework, Array.Empty<PackageDependency>()));
 
-			manifest.Metadata.DependencyGroups = definedDependencyGroups.Values;
+			manifest.Metadata.DependencyGroups = definedDependencyGroups.Values.Concat(manifest.Metadata.DependencyGroups);
 		}
 
 		void AddFiles(Manifest manifest)
 		{
-			var contents = Contents.Where(item => 
+			var contents = Contents.Where(item =>
 				!string.IsNullOrEmpty(item.GetMetadata(MetadataName.PackagePath)));
 
 			var duplicates = contents.GroupBy(item => item.GetMetadata(MetadataName.PackagePath))
@@ -166,7 +179,7 @@ namespace NuGet.Build.Packaging.Tasks
 				}));
 
 			// Additional metadata for the content files must be added separately
-			manifest.Metadata.ContentFiles = contents
+			var contentFiles = contents
 				.Where(item => item.GetMetadata(MetadataName.PackageFolder) == PackagingConstants.Folders.ContentFiles)
 				.Select(item => new ManifestContentFiles
 				{
@@ -174,20 +187,22 @@ namespace NuGet.Build.Packaging.Tasks
 					BuildAction = item.GetNullableMetadata(MetadataName.ContentFile.BuildAction),
 					CopyToOutput = item.GetNullableMetadata(MetadataName.ContentFile.CopyToOutput),
 					Flatten = item.GetNullableMetadata(MetadataName.ContentFile.Flatten),
-				}).ToArray();
+				});
+
+			manifest.Metadata.ContentFiles = contentFiles.Concat(manifest.Metadata.ContentFiles);
 		}
 
 		void AddFrameworkAssemblies(Manifest manifest)
 		{
 			var frameworkReferences = (from item in Contents
-			 						   where item.GetMetadata(MetadataName.Kind) == PackageItemKind.FrameworkReference
-			 						   select new FrameworkAssemblyReference
-									   (
-										   item.ItemSpec,
-										   new[] { NuGetFramework.Parse(item.GetTargetFrameworkMoniker().FullName) }
-									   )).Distinct(FrameworkAssemblyReferenceComparer.Default);
+									   where item.GetMetadata(MetadataName.Kind) == PackageItemKind.FrameworkReference
+									   select new FrameworkAssemblyReference
+									  (
+										  item.ItemSpec,
+										  new[] { NuGetFramework.Parse(item.GetTargetFrameworkMoniker().FullName) }
+									  )).Distinct(FrameworkAssemblyReferenceComparer.Default);
 
-			manifest.Metadata.FrameworkReferences = frameworkReferences;
+			manifest.Metadata.FrameworkReferences = frameworkReferences.Concat(manifest.Metadata.FrameworkReferences);
 		}
 
 		void BuildPackage(Stream output)
@@ -199,9 +214,9 @@ namespace NuGet.Build.Packaging.Tasks
 			// We don't use PopulateFiles because that performs search expansion, base path 
 			// extraction and the like, which messes with our determined files to include.
 			// TBD: do we support wilcard-based include/exclude?
-			builder.Files.AddRange(manifest.Files.Select(file => 
+			builder.Files.AddRange(manifest.Files.Select(file =>
 				new PhysicalPackageFile { SourcePath = file.Source, TargetPath = file.Target }));
-			
+
 			builder.Save(output);
 
 			if (!string.IsNullOrEmpty(NuspecFile))
