@@ -13,7 +13,6 @@
 
   <PropertyGroup>
     <NuGetUrl Condition=" '$(NuGetUrl)' == '' ">https://dist.nuget.org/win-x86-commandline/latest/nuget.exe</NuGetUrl>
-    <RestorePackages>false</RestorePackages>
     <RunCodeAnalysis Condition=" '$(RunCodeAnalysis)' == ''">false</RunCodeAnalysis>
     <IntermediateOutputPath>.nuget\</IntermediateOutputPath>
     <PackagesPath>$(IntermediateOutputPath)packages</PackagesPath>
@@ -21,7 +20,11 @@
     <DefaultImportance Condition=" '$(DefaultImportance)' == '' ">high</DefaultImportance>
     <PS>%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PS>
     <GitInfoReportImportance>high</GitInfoReportImportance>
-  </PropertyGroup>
+
+		<SleetInit>false</SleetInit>
+		<StorageAccount>kzu</StorageAccount>
+		<StorageContainer>nuget</StorageContainer>
+	</PropertyGroup>
 
   <ItemGroup>
 		<Solution Include="external\ApiIntersect\ApiIntersect.sln" />
@@ -32,7 +35,8 @@
 
   <ItemGroup>
     <PackageReference Include="xunit.runner.console" Version="2.3.1" />
-    <PackageReference Include="OpenCover" Version="4.6.519" />
+		<PackageReference Include="MSBuilder.CI" Version="0.1.2" />
+		<PackageReference Include="OpenCover" Version="4.6.519" />
     <PackageReference Include="ReportGenerator" Version="2.4.5" />
   </ItemGroup>
 
@@ -49,14 +53,10 @@
 
   <Target Name="Build" DependsOnTargets="GitInfoReport;SetVersion">
     <!-- For now this is an informative version #, used to update CI -->
-    <Message Text="Building version $(PackageVersion)" Importance="high" />
-    <!-- Update AppVeyor build # to match the actual one being used -->
-    <Exec Command="appveyor UpdateBuild -Version $(PackageVersion)"
-          Condition=" '$(APPVEYOR)' == 'true' "
-          ConsoleToMSBuild="true"
-          ContinueOnError="WarnAndContinue" />
-  
-    <Exec Command="rmdir $(Out) /S /Q" Condition=" Exists('$(Out)') " ContinueOnError="true" StandardOutputImportance="low" />
+		<Message Text="##vso[build.updatebuildnumber]$(PackageVersion)" Condition="'$(TF_BUILD)' == 'true'" Importance="high" />
+		<Exec Command="appveyor UpdateBuild -Version $(PackageVersion)" Condition="'$(APPVEYOR)' == 'true'" ContinueOnError="WarnAndContinue" />
+
+		<Exec Command="rmdir $(Out) /S /Q" Condition=" Exists('$(Out)') " ContinueOnError="true" StandardOutputImportance="low" />
     <MakeDir Directories="$(Out)" Condition="!Exists('$(Out)')" />
     <Message Text="Build properties: $(CommonBuildProperties)." Importance="high" />
     <MSBuild Projects="@(Solution)" BuildInParallel="false" Properties="$(CommonBuildProperties);CreateVsixContainer=false;DeployExtension=false" />

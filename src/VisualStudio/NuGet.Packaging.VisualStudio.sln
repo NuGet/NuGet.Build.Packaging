@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26510.0
+VisualStudioVersion = 15.0.27110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.Packaging.VisualStudio", "NuGet.Packaging.VisualStudio\NuGet.Packaging.VisualStudio.csproj", "{9617EDCD-23BB-41EA-827D-F5729D45B0AF}"
 EndProject
@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		..\..\appveyor.yml = ..\..\appveyor.yml
 		..\..\build.proj = ..\..\build.proj
+		..\Directory.Build.targets = ..\Directory.Build.targets
 		..\NuGet.Build.Packaging.Shared.props = ..\NuGet.Build.Packaging.Shared.props
 		..\NuGet.Build.Packaging.Shared.targets = ..\NuGet.Build.Packaging.Shared.targets
 		NuGet.Packaging.VisualStudio.Shared.targets = NuGet.Packaging.VisualStudio.Shared.targets
@@ -45,5 +46,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {923815E1-284E-48A4-A1C1-DC1E3C86A388}
 	EndGlobalSection
 EndGlobal
