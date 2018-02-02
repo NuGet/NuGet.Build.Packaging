@@ -4,11 +4,16 @@
 	<PropertyGroup>
 		<ResolveAssemblyReferencesDependsOn />
     <TargetFrameworkRootPath>$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\</TargetFrameworkRootPath>
-    <FrameworkPathOverride>$(TargetFrameworkRootPath).NETFramework\v4.6</FrameworkPathOverride>
+	  <FrameworkPathOverride>$(TargetFrameworkRootPath).NETPortable\v4.6</FrameworkPathOverride>
   </PropertyGroup>
 	<Target Name="CleanReferences" AfterTargets="ResolveAssemblyReferences">
 		<ItemGroup>
 			<ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" />
+		</ItemGroup>
+	</Target>
+	<Target Name="AddSystemRuntime" AfterTargets="ResolveAssemblyReferences">
+		<ItemGroup>
+			<ReferencePath Include="@(ReferenceDependencyPaths)" />
 		</ItemGroup>
 	</Target>
 </Project>

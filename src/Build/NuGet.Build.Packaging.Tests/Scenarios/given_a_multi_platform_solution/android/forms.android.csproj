@@ -3,7 +3,7 @@
 	<Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), Scenario.props))\Scenario.props" />
 	<PropertyGroup>
 		<AssemblyName>Forms</AssemblyName>
-		<TargetFrameworkMoniker>Android,Version=v7.0</TargetFrameworkMoniker>
+		<TargetFrameworkMoniker>MonoAndroid,Version=v7.0</TargetFrameworkMoniker>
 		<ProjectGuid>$(GuidE)</ProjectGuid>
 		<OutputPath>bin</OutputPath>
 		<IntermediateOutputPath>obj\</IntermediateOutputPath>
@@ -11,11 +11,14 @@
 		<DocumentationFile />
 	</PropertyGroup>
 	<ItemGroup>
-		<Content Include="quickstart\**\*.*">
-			<CodeLanguage>$([System.String]::new('%(Extension)').TrimStart('.'))</CodeLanguage>
-			<BuildAction>None</BuildAction>
-		</Content>
-		<ProjectReference Include="..\common\common.csproj">
+    <PackageReference Include="System.Runtime">
+      <Version>4.3.0</Version>
+    </PackageReference>
+    <Content Include="quickstart\**\*.*">
+      <CodeLanguage>$([System.String]::new('%(Extension)').TrimStart('.'))</CodeLanguage>
+      <BuildAction>None</BuildAction>
+    </Content>
+    <ProjectReference Include="..\common\common.csproj">
 			<Project>$(GuidF)</Project>
 			<Name>common</Name>
 		</ProjectReference>
