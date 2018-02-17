@@ -10,7 +10,7 @@ set BatchFile=%0
 set Root=%~dp0
 set NodeReuse=true
 set MultiProcessor=/m
-set BuildConfiguration=/t:Debug
+set BuildConfiguration=Debug
 set MSBuildTarget=/t:All
 set MSBuildAdditionalArguments=
 
