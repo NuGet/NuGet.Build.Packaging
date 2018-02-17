@@ -47,11 +47,7 @@
 
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 
-  <Target Name="Build" DependsOnTargets="GitInfoReport;SetVersion">
-    <Message Importance="high" Text="*********************************************************************************************************************" />
-    <Message Importance="high" Text="$([System.Environment]::CommandLine)" />
-    <Message Importance="high" Text="*********************************************************************************************************************" />
-  
+  <Target Name="Build" DependsOnTargets="_RenderCommandLine;GitInfoReport;SetVersion">
     <!-- For now this is an informative version #, used to update CI -->
     <Message Text="Building version $(PackageVersion)" Importance="high" />
     <!-- Update AppVeyor build # to match the actual one being used -->
@@ -143,6 +139,14 @@
   </Target>
 
   <Target Name="Configure" DependsOnTargets="Restore" />
+
+  <Target Name="_BeforeRestore" DependsOnTargets="_RenderCommandLine" BeforeTargets="Restore" />
+
+  <Target Name="_RenderCommandLine">
+    <Message Importance="high" Text="*********************************************************************************************************************" />
+    <Message Importance="high" Text="$([System.Environment]::CommandLine)" />
+    <Message Importance="high" Text="*********************************************************************************************************************" />
+  </Target>
 
 	<Import Project="src\Directory.Build.targets" />
 	<Import Project="build\corebuild.targets" />
