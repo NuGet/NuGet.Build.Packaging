@@ -32,15 +32,6 @@
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="VSLangProj110, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="VSLangProj140, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="VSLangProj80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +51,8 @@
     <PackageReference Include="MSBuilder.ThisAssembly.Project" Version="0.3.3" />
     <PackageReference Include="MSBuilder.VsixDependency" Version="0.2.13" />
     <PackageReference Include="MSBuilder.VsixInstaller" Version="0.2.18" />
+    <PackageReference Include="VSLangProj110" Version="1.0.0" />
+    <PackageReference Include="VSLangProj140" Version="1.0.0" />
     <PackageReference Include="VSLangProj150" Version="1.0.0" />
     <PackageReference Include="VSSDK.ComponentModelHost.11" Version="11.0.4" />
   </ItemGroup>

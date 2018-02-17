@@ -38,7 +38,8 @@
     <PackageReference Include="VSSDK.ComponentModelHost.11" Version="11.0.4" />
     <PackageReference Include="VSSDK.DTE.8" Version="8.0.4" />
     <PackageReference Include="VSSDK.TemplateWizardInterface" Version="12.0.4" />
-    <PackageReference Include="VSSDK.VSLangProj" Version="7.0.4" />
+    <PackageReference Include="VSLangProj" Version="7.0.4" />
+    <PackageReference Include="Microsoft.VisualStudio.SDK.EmbedInteropTypes" Version="14.1.7" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
