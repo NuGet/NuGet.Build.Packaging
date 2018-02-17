@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="All" InitialTargets="Configure" TreatAsLocalProperty="RootSuffix" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Project="corebuild\corebuild.props" />
+<Project DefaultTargets="All" TreatAsLocalProperty="RootSuffix" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="build\corebuild.props" />
   <Import Project="build.props" />
 
   <PropertyGroup Condition="'$(IsCIBuild)' != 'true'">
@@ -48,6 +48,10 @@
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 
   <Target Name="Build" DependsOnTargets="GitInfoReport;SetVersion">
+    <Message Importance="high" Text="*********************************************************************************************************************" />
+    <Message Importance="high" Text="$([System.Environment]::CommandLine)" />
+    <Message Importance="high" Text="*********************************************************************************************************************" />
+  
     <!-- For now this is an informative version #, used to update CI -->
     <Message Text="Building version $(PackageVersion)" Importance="high" />
     <!-- Update AppVeyor build # to match the actual one being used -->
@@ -138,12 +142,8 @@
     <Exec Command="start $(Out)\coverage\index.htm" />
   </Target>
 
-  <Target Name="Configure">
-    <Message Importance="high" Text="*********************************************************************************************************************" />
-    <Message Importance="high" Text="$([System.Environment]::CommandLine)" />
-    <Message Importance="high" Text="*********************************************************************************************************************" />
-  </Target>
+  <Target Name="Configure" DependsOnTargets="Restore" />
 
 	<Import Project="src\Directory.Build.targets" />
-	<Import Project="corebuild\corebuild.targets" />
+	<Import Project="build\corebuild.targets" />
 </Project>
