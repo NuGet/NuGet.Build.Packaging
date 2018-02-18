@@ -5,6 +5,7 @@
     <TargetFramework>net46</TargetFramework>
     <NuGetBuildTasksPackTargets>NO-SDK-PACK</NuGetBuildTasksPackTargets>
     <MSBuildPath>$(MSBuildProgramFiles32)\MSBuild\14.0\Bin</MSBuildPath>
+    <MSBuildPath Condition="!Exists('$(MSBuildPath)')">C:\Program Files\MSBuild\14.0\Bin</MSBuildPath>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="ILRepack" Version="2.0.13" PrivateAssets="all" />
