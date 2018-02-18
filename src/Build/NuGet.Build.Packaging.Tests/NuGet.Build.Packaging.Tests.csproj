@@ -6,30 +6,46 @@
     <SignAssembly>false</SignAssembly>
     <PublicSign>false</PublicSign>
     <NuGetBuildTasksPackTargets>NO-SDK-PACK</NuGetBuildTasksPackTargets>
+
+    <!-- Force generation of binding redirects since we'll have mismatches from the 14.0-targeting references. -->
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
+  <ItemGroup>
+    <ThisAssemblyProjectProperty Include="SolutionPath" />
+    <ThisAssemblyProjectProperty Include="VsInstallRoot" />
+    <ThisAssemblyProjectProperty Include="MSBuildProjectDirectory" />
+  </ItemGroup>
+  <ItemGroup>
+    <_NoneFromMSBuild Include="@(None -&gt; WithMetadataValue('NuGetPackageId', 'Microsoft.Build.Runtime'))" />
+    <None Update="@(_NoneFromMSBuild)">
+      <Visible>false</Visible>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="NuGet.Build.Packaging.Tasks">
       <HintPath>..\NuGet.Build.Packaging.Tasks\bin\$(Configuration)\NuGet.Build.Packaging.Tasks.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="GitInfo" Version="1.1.61" />
-    <PackageReference Include="Microsoft.Build" Version="14.3.0" />
+    <!-- For the unit tests, we target the latest & greatest MSBuild and SDKs -->
+    <PackageReference Include="Microsoft.Build" Version="15.5.180" />
+    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="15.5.180" />
+    <PackageReference Include="Microsoft.Build.Runtime" Version="15.5.180.1" />
     <PackageReference Include="Microsoft.Build.Logging.StructuredLogger" Version="1.1.168" />
-    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="14.3.0" />
+
     <PackageReference Include="MSBuilder.CodeTaskAssembly" Version="*" />
     <PackageReference Include="MSBuilder.DumpItems" Version="*" />
     <PackageReference Include="MSBuilder.Introspect" Version="*" />
+    <PackageReference Include="MSBuilder.ThisAssembly.Project" Version="0.3.4" />
     <PackageReference Include="System.IO.Compression" Version="4.3.0" />
     <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
-    <PackageReference Include="xunit" Version="2.2.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\external\ApiIntersect\ApiIntersect\ApiIntersect.csproj">
-      <Project>{cd767d93-6c99-4d6a-a303-3c139a73400e}</Project>
-      <Name>ApiIntersect</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\NuGet.Build.Packaging.Tasks\NuGet.Build.Packaging.Tasks.csproj" />
+    <ProjectReference Include="..\..\..\external\ApiIntersect\ApiIntersect\ApiIntersect.csproj" />
   </ItemGroup>
   <ItemGroup>
     <!-- Do not compile any scenario related generated files -->
@@ -40,13 +56,7 @@
     <None Include="Scenarios\**\*.cs" />
 
     <None Remove="Scenarios\**\obj\**\*.*;Scenarios\**\bin\**\*.*" />
-    <None Remove="App.config" />
     <None Include="Scenarios\**\*.*proj;Scenarios\**\*.sln" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />

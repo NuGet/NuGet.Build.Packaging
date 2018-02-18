@@ -407,7 +407,7 @@ namespace NuGet.Build.Packaging
 				kind.GetMetadata(MetadataName.PackageFolder) != "contentFiles")
 			.Select(kind => new object[] { kind.ItemSpec, kind.GetMetadata(MetadataName.PackageFolder), kind.GetMetadata(MetadataName.FrameworkSpecific) });
 
-		[MemberData("GetMappedKnownKinds")]
+		[MemberData(nameof(GetMappedKnownKinds))]
 		[Theory]
 		public void when_file_has_known_kind_then_assigned_file_contains_mapped_package_folder(string packageFileKind, string mappedPackageFolder, string frameworkSpecific)
 		{

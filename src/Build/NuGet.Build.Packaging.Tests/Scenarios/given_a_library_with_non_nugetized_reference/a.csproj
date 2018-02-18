@@ -12,7 +12,7 @@
 			<Name>b</Name>
 			<IncludeInPackage>$(IncludeInPackage)</IncludeInPackage>
 		</ProjectReference>
-		<ProjectReference Include="c.csproj">
+		<ProjectReference Include="c\c.csproj">
 			<Project>$(GuidC)</Project>
 			<Name>c</Name>
 		</ProjectReference>

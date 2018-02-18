@@ -15,7 +15,7 @@ namespace NuGet.Build.Packaging
 			this.output = output;
 		}
 
-		[Fact]
+		[Fact(Skip = "Deprecating project.json dependencies")]
 		public void when_getting_package_contents_then_can_remove_development_dependency()
 		{
 			var result = Builder.BuildScenario(nameof(given_a_library_with_json_dependencies), output: output);
@@ -29,7 +29,7 @@ namespace NuGet.Build.Packaging
 			}));
 		}
 
-		[Fact]
+		[Fact(Skip = "Deprecating project.json dependencies")]
 		public void when_getting_package_contents_then_contains_package_reference_to_nuget()
 		{
 			var result = Builder.BuildScenario(nameof(given_a_library_with_json_dependencies), output: output);
@@ -48,7 +48,7 @@ namespace NuGet.Build.Packaging
 			}));
 		}
 
-		[Fact]
+		[Fact(Skip = "Deprecating project.json dependencies")]
 		public void when_not_inferring_legacy_package_references_then_does_not_contain_package_reference_to_nuget()
 		{
 			var result = Builder.BuildScenario(nameof(given_a_library_with_config_dependencies),

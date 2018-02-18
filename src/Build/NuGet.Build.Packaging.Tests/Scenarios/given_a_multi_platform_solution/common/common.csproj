@@ -5,13 +5,23 @@
 		<AssemblyName>Common</AssemblyName>
 		<ProjectGuid>$(GuidF)</ProjectGuid>
 		<IsPortable>true</IsPortable>
-		<TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
 		<OutputPath>bin</OutputPath>
 		<IntermediateOutputPath>obj\</IntermediateOutputPath>
 		<IncludeSymbolsInPackage>false</IncludeSymbolsInPackage>
+		<PackageTargetFallback>monoandroid70;xamarinios10</PackageTargetFallback>
 		<DocumentationFile />
 	</PropertyGroup>
-	<ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.Portable.Compatibility">
+      <Version>1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="NETStandard.Library">
+      <Version>1.6.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
 		<None Include="project.json" />
 	</ItemGroup>
 	<Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), Scenario.targets))\Scenario.targets" />
