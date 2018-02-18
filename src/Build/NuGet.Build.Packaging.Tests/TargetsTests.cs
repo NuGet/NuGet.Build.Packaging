@@ -103,7 +103,7 @@ namespace NuGet.Build.Packaging
 
 			xml.Save();
 
-			var project = new ProjectInstance(xml);
+			var project = new ProjectInstance(xml, Builder.DefaultGlobalProperties, "15.0", new ProjectCollection(ToolsetDefinitionLocations.Local));
 
 			var result = Builder.Build(project, "GetPackageContents");
 

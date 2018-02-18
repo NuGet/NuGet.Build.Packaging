@@ -31,6 +31,9 @@
 
 		<!-- Avoids architecture mismatch warnings -->
 		<ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+
+		<ImportDirectoryBuildProps>false</ImportDirectoryBuildProps>
+		<ImportDirectoryBuildTargets>false</ImportDirectoryBuildTargets>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.nuproj'">

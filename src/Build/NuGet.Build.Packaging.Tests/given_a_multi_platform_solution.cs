@@ -31,11 +31,11 @@ namespace NuGet.Build.Packaging
 			}));
 			Assert.Contains(result.Items, item => item.Matches(new
 			{
-				PackagePath = @"lib\ios10\Forms.dll"
+				PackagePath = @"lib\xamarinios10\Forms.dll"
 			}));
 			Assert.Contains(result.Items, item => item.Matches(new
 			{
-				PackagePath = @"lib\android70\Forms.dll"
+				PackagePath = @"lib\monoandroid70\Forms.dll"
 			}));
 		}
 
@@ -52,11 +52,11 @@ namespace NuGet.Build.Packaging
 			}));
 			Assert.Contains(result.Items, item => item.Matches(new
 			{
-				PackagePath = @"lib\ios10\Common.dll"
+				PackagePath = @"lib\xamarinios10\Common.dll"
 			}));
 			Assert.Contains(result.Items, item => item.Matches(new
 			{
-				PackagePath = @"lib\android70\Common.dll"
+				PackagePath = @"lib\monoandroid70\Common.dll"
 			}));
 		}
 
@@ -69,15 +69,15 @@ namespace NuGet.Build.Packaging
 
 			Assert.Contains(result.Items, item => item.Matches(new
 			{
-				PackagePath = @"contentFiles\cs\android70\quickstart\sample.cs"
+				PackagePath = @"contentFiles\cs\monoandroid70\quickstart\sample.cs"
 			}));
 			Assert.Contains(result.Items, item => item.Matches(new
 			{
-				PackagePath = @"contentFiles\vb\android70\quickstart\sample.vb"
+				PackagePath = @"contentFiles\vb\monoandroid70\quickstart\sample.vb"
 			}));
 			Assert.Contains(result.Items, item => item.Matches(new
 			{
-				PackagePath = @"contentFiles\fs\android70\quickstart\sample.fs"
+				PackagePath = @"contentFiles\fs\monoandroid70\quickstart\sample.fs"
 			}));
 		}
 
