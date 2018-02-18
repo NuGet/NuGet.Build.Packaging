@@ -18,16 +18,21 @@ public static partial class Builder
 {
 	static Builder()
 	{
-		var where = Environment.OSVersion.Platform == PlatformID.Win32NT ? "where" : "which";
-		Process
-			.Start(new ProcessStartInfo("cmd.exe", $"/c {where} dotnet > dotnet.txt")
-			{
-				CreateNoWindow = true,
-				WindowStyle = ProcessWindowStyle.Hidden
-			})
-			.WaitForExit();
+		var dotnet = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "dotnet", "dotnet.exe");
+		if (!File.Exists(dotnet))
+		{
+			var where = Environment.OSVersion.Platform == PlatformID.Win32NT ? "where" : "which";
+			Process
+				.Start(new ProcessStartInfo("cmd.exe", $"/c {where} dotnet > dotnet.txt")
+				{
+					CreateNoWindow = true,
+					WindowStyle = ProcessWindowStyle.Hidden
+				})
+				.WaitForExit();
 
-		var dotnet = File.ReadAllText("dotnet.txt").Trim();
+			dotnet = File.ReadAllText("dotnet.txt").Trim();
+		}
+
 		if (string.IsNullOrEmpty(dotnet) || !File.Exists(dotnet))
 			throw new InvalidOperationException("Failed to locate dotnet.");
 
@@ -83,7 +88,7 @@ public static partial class Builder
 		{
 			var request = new BuildRequestData(project, targets.Split(','));
 			var parameters = new BuildParameters
-			{ 
+			{
 				GlobalProperties = properties,
 				DisableInProcNode = !Debugger.IsAttached,
 				EnableNodeReuse = false,
