@@ -12,8 +12,8 @@ init:
 
 build_script:
   - cmd: echo /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" >> msbuild.rsp
-  - cmd: build.cmd /restore
-  - cmd: build.cmd /release
+  - cmd: msbuild /t:restore /p:Configuration=Release /m
+  - cmd: msbuild /t:All /p:Configuration=Release /m
 
 install:
 - cmd: git submodule update --init --recursive
