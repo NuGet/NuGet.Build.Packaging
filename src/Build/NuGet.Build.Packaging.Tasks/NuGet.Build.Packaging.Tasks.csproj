@@ -4,6 +4,9 @@
     <ProjectGuid>{A3D231D7-31E4-4A70-8CD1-7246C7D069F6}</ProjectGuid>
     <TargetFramework>net46</TargetFramework>
     <NuGetBuildTasksPackTargets>NO-SDK-PACK</NuGetBuildTasksPackTargets>
+
+    <PackOnBuild>true</PackOnBuild>
+    <PackageOutputPath>$(Out)</PackageOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="ILRepack" Version="2.0.13" PrivateAssets="all" />
