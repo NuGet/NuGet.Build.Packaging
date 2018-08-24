@@ -417,7 +417,7 @@ namespace NuGet.Build.Packaging
 			var manifest = ExecuteTask();
 
 			Assert.Contains(manifest.Files, file => file.Target == @"contentFiles\any\any\readme.txt");
-			Assert.Contains(manifest.Metadata.ContentFiles, file => file.Include == @"contentFiles\any\any\readme.txt");
+			Assert.Contains(manifest.Metadata.ContentFiles, file => file.Include == @"any\any\readme.txt");
 		}
 
 		[Fact]
@@ -439,7 +439,7 @@ namespace NuGet.Build.Packaging
 			var manifest = ExecuteTask();
 
 			Assert.Contains(manifest.Files, file => file.Target == @"contentFiles\any\any\readme.txt");
-			Assert.Contains(manifest.Metadata.ContentFiles, file => file.Include == @"contentFiles\any\any\readme.txt" && file.BuildAction == "EmbeddedResource");
+			Assert.Contains(manifest.Metadata.ContentFiles, file => file.Include == @"any\any\readme.txt" && file.BuildAction == "EmbeddedResource");
 		}
 		
 		[Fact]
@@ -469,7 +469,7 @@ namespace NuGet.Build.Packaging
 
 			Assert.Equal(new[]
 				{
-					new ManifestContentFiles { Include = @"contentFiles\any\any\readme.txt", CopyToOutput = "true" }
+					new ManifestContentFiles { Include = @"any\any\readme.txt", CopyToOutput = "true" }
 				},
 				manifest.Metadata.ContentFiles, ManifestContentFilesComparer.Default);
 		}
@@ -506,7 +506,7 @@ namespace NuGet.Build.Packaging
 				{
 					new ManifestContentFiles
 					{
-						Include = @"contentFiles\any\any\readme.txt",
+						Include = @"any\any\readme.txt",
 						Flatten = "true"
 					}
 				},
