@@ -114,7 +114,7 @@ namespace NuGet.Build.Packaging.Tasks
 								   Id = item.ItemSpec,
 								   Version = VersionRange.Parse(item.GetMetadata(MetadataName.Version)),
 								   TargetFramework = item.GetNuGetTargetFramework(),
-								   Include = item.GetMetadata(MetadataName.IncludeAssets)
+								   Include = item.GetNullableMetadata(MetadataName.IncludeAssets)
 							   };
 
 			var definedDependencyGroups = (from dependency in dependencies
@@ -129,7 +129,7 @@ namespace NuGet.Build.Packaging.Tasks
 												 (
 													 dependenciesById.Key,
 													 dependenciesById.Select(x => x.Version).Aggregate(AggregateVersions),
-													 dependenciesById.SelectMany(x => x.Include.Split(';')).Distinct().ToList(),
+													 dependenciesById.Select(x => x.Include).Aggregate(default(List<string>), AggregateIncludes),
 													 null
 												 )).ToList()
 										   )).ToDictionary(p => p.TargetFramework.GetFrameworkString());
@@ -286,6 +286,16 @@ namespace NuGet.Build.Packaging.Tasks
 				return null;
 
 			return versionSpec.ToVersionRange();
+		}
+
+		static List<string> AggregateIncludes(List<string> aggregate, string next)
+		{
+			if (next == null)
+				return aggregate;
+			if (aggregate == null)
+				aggregate = new List<string>(1);
+			aggregate.AddRange(next.Split(';'));
+			return aggregate;
 		}
 
 		static void SetMinVersion(VersionSpec target, VersionRange source)
