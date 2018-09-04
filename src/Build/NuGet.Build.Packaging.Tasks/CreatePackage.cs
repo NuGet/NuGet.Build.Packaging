@@ -130,8 +130,8 @@ namespace NuGet.Build.Packaging.Tasks
 												 (
 													 dependenciesById.Key,
 													 dependenciesById.Select(x => x.Version).Aggregate(AggregateVersions),
-													 dependenciesById.Select(x => x.Include).Aggregate(default(List<string>), AggregateIncludes),
-													 dependenciesById.Select(x => x.Exclude).Aggregate(default(List<string>), AggregateIncludes)
+													 dependenciesById.Select(x => x.Include).Aggregate(default(List<string>), AggregateAssetsFlow),
+													 dependenciesById.Select(x => x.Exclude).Aggregate(default(List<string>), AggregateAssetsFlow)
 												 )).ToList()
 										   )).ToDictionary(p => p.TargetFramework.GetFrameworkString());
 
@@ -289,7 +289,7 @@ namespace NuGet.Build.Packaging.Tasks
 			return versionSpec.ToVersionRange();
 		}
 
-		static List<string> AggregateIncludes(List<string> aggregate, string next)
+		static List<string> AggregateAssetsFlow(List<string> aggregate, string next)
 		{
 			if (next == null)
 				return aggregate;
