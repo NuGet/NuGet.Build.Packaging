@@ -114,7 +114,8 @@ namespace NuGet.Build.Packaging.Tasks
 								   Id = item.ItemSpec,
 								   Version = VersionRange.Parse(item.GetMetadata(MetadataName.Version)),
 								   TargetFramework = item.GetNuGetTargetFramework(),
-								   Include = item.GetNullableMetadata(MetadataName.IncludeAssets)
+								   Include = item.GetNullableMetadata(MetadataName.IncludeAssets),
+								   Exclude = item.GetNullableMetadata(MetadataName.ExcludeAssets)
 							   };
 
 			var definedDependencyGroups = (from dependency in dependencies
@@ -130,7 +131,7 @@ namespace NuGet.Build.Packaging.Tasks
 													 dependenciesById.Key,
 													 dependenciesById.Select(x => x.Version).Aggregate(AggregateVersions),
 													 dependenciesById.Select(x => x.Include).Aggregate(default(List<string>), AggregateIncludes),
-													 null
+													 dependenciesById.Select(x => x.Exclude).Aggregate(default(List<string>), AggregateIncludes)
 												 )).ToList()
 										   )).ToDictionary(p => p.TargetFramework.GetFrameworkString());
 
@@ -350,6 +351,8 @@ namespace NuGet.Build.Packaging.Tasks
 			public VersionRange Version { get; set; }
 
 			public string Include { get; set; }
+
+			public string Exclude { get; set; }
 		}
 
 		class VersionSpec

@@ -32,6 +32,8 @@
 
 		public const string IncludeAssets = nameof(IncludeAssets);
 
+		public const string ExcludeAssets = nameof(ExcludeAssets);
+
 		/// <summary>
 		/// Whether the project can be packed as a .nupkg.
 		/// </summary>
