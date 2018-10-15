@@ -703,9 +703,11 @@ namespace NuGet.Build.Packaging
 			task.Manifest = new TaskItem("package",
 				new Metadata
 				{
-					{"Id", "package"},
-					{"Version", "1.0.0"},
-					{"Title", "title"},
+					{ "Id", "package" },
+					{ "Version", "1.0.0" },
+					{ "Title", "title" },
+					{ "Description", "description" },
+					{ "Authors", "author1, author2" },
 				});
 
 			task.Contents = new[]
@@ -730,10 +732,12 @@ namespace NuGet.Build.Packaging
 			task.Manifest = new TaskItem("package",
 				new Metadata
 				{
-					{"Id", "package"},
-					{"Version", "1.0.0"},
-					{"Title", "title"},
-					{"PackageTypes", string.Empty }
+					{ "Id", "package" },
+					{ "Version", "1.0.0" },
+					{ "Title", "title" },
+					{ "Description", "description" },
+					{ "Authors", "author1, author2" },
+					{ "PackageTypes", string.Empty }
 				});
 
 			task.Contents = new[]
@@ -758,10 +762,12 @@ namespace NuGet.Build.Packaging
 			task.Manifest = new TaskItem("package",
 				new Metadata
 				{
-					{"Id", "package"},
-					{"Version", "1.0.0"},
-					{"Title", "title"},
-					{"PackageTypes", "SomeType, 2.0.0" }
+					{ "Id", "package" },
+					{ "Version", "1.0.0" },
+					{ "Title", "title" },
+					{ "Description", "description" },
+					{ "Authors", "author1, author2" },
+					{ "PackageTypes", "SomeType, 2.0.0" }
 				});
 
 			task.Contents = new[]
@@ -786,15 +792,17 @@ namespace NuGet.Build.Packaging
 		}
 
 		[Fact]
-		public void when_creating_package_with_multiple_package_typea()
+		public void when_creating_package_with_multiple_package_types()
 		{
 			task.Manifest = new TaskItem("package",
 				new Metadata
 				{
-					{"Id", "package"},
-					{"Version", "1.0.0"},
-					{"Title", "title"},
-					{"PackageTypes", "SomeType, 2.0.0; AnotherType; ThirdTypeWithVersion, 1.2.3.4" }
+					{ "Id", "package" },
+					{ "Version", "1.0.0" },
+					{ "Title", "title" },
+					{ "Description", "description" },
+					{ "Authors", "author1, author2" },
+					{ "PackageTypes", "SomeType, 2.0.0; AnotherType; ThirdTypeWithVersion, 1.2.3.4" }
 				});
 
 			task.Contents = new[]
