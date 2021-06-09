@@ -1,3 +1,8 @@
+# !!! IMPORTANT !!!
+
+This project is no longer maintained here. 
+Its new home is at https://github.com/devlooped/nugetizer
+
 ![Nugetizer-3000 Logo](https://raw.githubusercontent.com/NuGet/NuGet.Build.Packaging/master/Nugetizer-3000.png)
 
 # NuGetizer3000
